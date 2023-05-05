@@ -1,9 +1,11 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import appConfig from './configs/app-config';
 import mysqlConfig from '@app/common/database/configs/mysql-config';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import typeormConfig from '@app/common/database/configs/typeorm-config';
 
 @Module({
   imports: [
@@ -11,6 +13,11 @@ import mysqlConfig from '@app/common/database/configs/mysql-config';
       envFilePath: '.env',
       isGlobal: true,
       load: [appConfig, mysqlConfig],
+    }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: typeormConfig,
+      inject: [ConfigService],
     }),
   ],
   controllers: [AppController],
