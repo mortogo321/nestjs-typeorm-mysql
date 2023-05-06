@@ -1,4 +1,4 @@
-import { User } from '@app/common/database/entities/User.entity';
+import { User } from '@app/common/database/entities/user.entity';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -11,12 +11,12 @@ export class UsersService {
   ) {}
 
   async getUsers() {
-    return this.userRepository.find();
+    return await this.userRepository.find();
   }
 
-  createUser(userRequest: CreateUserRequest) {
+  async createUser(userRequest: CreateUserRequest) {
     const user = this.userRepository.create(userRequest);
 
-    this.userRepository.save(user);
+    await this.userRepository.save(user);
   }
 }

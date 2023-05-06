@@ -16,9 +16,9 @@ export class UsersController {
   }
 
   @Post()
-  createUser(@Body() createUserDto: CreateUserDto) {
+  async createUser(@Body() createUserDto: CreateUserDto) {
     const user = plainToInstance(CreateUserRequest, createUserDto);
 
-    return this.userService.createUser(user);
+    return await this.userService.createUser(user);
   }
 }
