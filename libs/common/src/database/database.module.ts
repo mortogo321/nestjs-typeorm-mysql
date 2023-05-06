@@ -9,6 +9,12 @@ import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
       useFactory: (configService: ConfigService) => {
         const isDev = (process.env.NODE_ENV || '') === 'development';
 
+        if (isDev) {
+          console.log(
+            `You are in ${process.env.NODE_ENV} mode, database will synchronize`,
+          );
+        }
+
         return {
           type: configService.get('app.database'),
           host: configService.get('mysql.host'),
